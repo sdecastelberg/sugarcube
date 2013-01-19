@@ -100,7 +100,7 @@ class UIImage
   end
 
   def rounded(corner_radius=5)
-    UIGraphicsBeginImageContext(size)
+    UIGraphicsBeginImageContextWithOptions(size, false, self.scale)
     path = UIBezierPath.bezierPathWithRoundedRect([[0, 0], size], cornerRadius:corner_radius)
     path.addClip
     self.drawInRect([[0, 0], size])
@@ -131,7 +131,7 @@ class UIImage
 
     context = CIContext.contextWithOptions(nil)
     cg_output_image = context.createCGImage(output, fromRect:output.extent)
-    output_image = UIImage.imageWithCGImage(cg_output_image)
+    output_image = UIImage.imageWithCGImage(cg_output_image, scale:self.scale, orientation:self.imageOrientation)
 
     return output_image
   end
@@ -159,7 +159,7 @@ class UIImage
     new_size = self.size
 
     # Create the bitmap context
-    UIGraphicsBeginImageContext(new_size)
+    UIGraphicsBeginImageContextWithOptions(new_size, false, self.scale)
     bitmap = UIGraphicsGetCurrentContext()
 
     # Move the origin to the middle of the image so we will rotate and scale around the center.
@@ -220,7 +220,7 @@ class UIImage
       pixel_bits, row_bytes, data_provider,nil, false)
 
     masked = CGImageCreateWithMask(self.CGImage, mask)
-    UIImage.imageWithCGImage(masked)
+    UIImage.imageWithCGImage(masked, scale:self.scale, orientation:self.imageOrientation)
   end
 
 end
