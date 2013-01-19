@@ -27,11 +27,14 @@ class UIImage
   ##|  <http://www.catamount.com/blog/uiimage-extensions-for-cutting-scaling-and-rotating-uiimages/>
   ##|  <http://www.catamount.com/forums/viewtopic.php?f=21&t=967>
   ##|
+
+  # This method is used to crop an image.  Scale (retina or non-retina) is preserved.
+  #
+  # @param rect the portion of the image to return
+  # @return [UIImage]
   def in_rect(rect)
-    # not necessary, since we don't modify/examine the rect
-    # rect = SugarCube::CoreGraphics::Rect(rect)
     imageRef = CGImageCreateWithImageInRect(self.CGImage, rect)
-    sub_image = UIImage.imageWithCGImage(imageRef)
+    sub_image = UIImage.imageWithCGImage(imageRef, scale:self.scale, orientation:self.imageOrientation)
 
     return sub_image
   end
