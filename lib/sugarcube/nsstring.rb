@@ -34,6 +34,9 @@ class NSString
         return (self[1] * 2 + self[2] * 2 + self[3] * 2).to_i(16).uicolor(alpha)
       end
       return self[1..-1].to_i(16).uicolor(alpha)
+    elsif Symbol.uicolors.has_key? self.to_sym or
+      Symbol.css_colors.has_key? self.to_sym
+      return self.to_sym.uicolor(alpha)
     end
 
     img = self.uiimage

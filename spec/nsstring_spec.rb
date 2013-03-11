@@ -49,6 +49,14 @@ describe "NSString" do
       ((color.blue * 2).round / 2.0).should == 0.5
     end
 
+    it "that supports color names" do
+      color = 'blue'.uicolor
+      UIColor.should === color
+      color.red.should == 0.0
+      color.green.should == 0.0
+      color.blue.should == 1.0
+    end
+
     it "that supports image names" do
       'little_square'.uicolor.should == 'little_square'.uiimage.uicolor
     end
